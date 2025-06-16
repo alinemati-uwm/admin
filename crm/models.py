@@ -31,3 +31,4 @@ class Membership(models.Model):
         verbose_name_plural = "Membership"
         ordering = ['name', 'membership_plan']
         unique_together = ('name', 'unique_code')
+

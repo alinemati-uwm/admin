@@ -143,4 +143,14 @@ class MembershipAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return True
     
+        # add to change or not change the user
+    def has_change_permission(self, request, obj=None):
+        """Allow change permission for all users in the admin."""
+        return False
+
+    def has_add_permission(self, request):
+        """Allow add permission for all users in the admin."""
+        return False
+
+#     
 
