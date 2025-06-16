@@ -141,6 +141,9 @@ class MembershipAdmin(admin.ModelAdmin):
 
     # # Allow delete option in admin
     def has_delete_permission(self, request, obj=None):
+        if obj != None and request.POST.get('action') == 'delete_selected':
+            # Message to prevent deletion
+            self.message_user(request, "Deletion is not allowed for Membership records.", level='error')
         return True
     
         # add to change or not change the user
@@ -152,5 +155,5 @@ class MembershipAdmin(admin.ModelAdmin):
         """Allow add permission for all users in the admin."""
         return False
 
-#     
-
+# Register the Membership model with the custom admin class
+# admin.site.register(Membership, MembershipAdmin)
