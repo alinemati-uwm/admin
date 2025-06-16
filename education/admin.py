@@ -4,6 +4,9 @@ from django.utils.html import format_html
 from django.db.models import Count
 from .models import Course, Lesson
 
+class AdminLoginArea(admin.AdminSite):
+    login_template = 'admin/login.html'
+admin_site = AdminLoginArea(name='admin')
 
 
 class LessonInline(admin.TabularInline):

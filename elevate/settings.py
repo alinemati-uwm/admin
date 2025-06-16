@@ -70,7 +70,7 @@ ROOT_URLCONF = "elevate.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -167,7 +167,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 # The URL prefix for static files. This is used to serve static files in development and production.
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 
 # Default primary key field type
