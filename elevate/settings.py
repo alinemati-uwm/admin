@@ -33,7 +33,9 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(','
 # Application definition
 
 INSTALLED_APPS = [
-#    'multi_captcha_admin',
+
+    'captcha',
+    'multi_captcha_admin',
     'django_advanced_password_validation',
     "django.contrib.admin",
     "django.contrib.auth",
@@ -44,7 +46,6 @@ INSTALLED_APPS = [
     'crm',
     'education',
 
-#    'captcha',
 ]
 
 

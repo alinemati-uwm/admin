@@ -9,7 +9,10 @@ from django.conf import settings
 from education.admin import education_site
 
 urlpatterns = [
+    
     path("admin/", admin.site.urls),
    # path("", lambda request: HttpResponse("✅ Welcome to the homepage!")),
     path("education-admin/", education_site.urls),  # Custom admin for education app
+    path('captcha/', include('captcha.urls')),
+
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
