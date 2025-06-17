@@ -4,10 +4,26 @@ from django.utils.html import format_html
 from django.db.models import Count
 from .models import Course, Lesson
 
-class AdminLoginArea(admin.AdminSite):
-    login_template = 'admin/login.html'
-admin_site = AdminLoginArea(name='admin')
+# class AdminLoginArea(admin.AdminSite):
+#     login_template = 'admin/login.html'
+# admin_site = AdminLoginArea(name='admin')
 
+class EducationAdminSite(admin.AdminSite):
+    """
+    Custom admin site for the education app.
+    This can be used to create a separate admin area if needed.
+    """
+    site_header = "Education Admin"
+    site_title = "Education Admin Portal"
+    index_title = "Welcome to the Education Admin Portal"
+
+education_site = EducationAdminSite(name='education_admin')
+
+
+
+
+education_site.register(Course)
+education_site.register(Lesson)
 
 class LessonInline(admin.TabularInline):
     """
