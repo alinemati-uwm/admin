@@ -2,13 +2,13 @@ from django.contrib import admin
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.models import Group, User
-from unfold.admin import ModelAdmin
-from unfold.forms import (AdminPasswordChangeForm, UserChangeForm,
-                          UserCreationForm)
-
+from django.utils.translation import gettext_lazy as _
 from import_export.admin import ImportExportModelAdmin
+from unfold.admin import ModelAdmin
 from unfold.contrib.import_export.forms import (ExportForm, ImportForm,
                                                 SelectableFieldsExportForm)
+from unfold.forms import (AdminPasswordChangeForm, UserChangeForm,
+                    UserCreationForm)
 
 from .models import Membership
 
@@ -35,9 +35,9 @@ class GroupAdmin(BaseGroupAdmin, ModelAdmin):
 # admin.site.unregister(Group) # Unregister the Group model to prevent it from being displayed in the admin interface
 
 # Costumization admin title and header
-admin.site.site_header = "CRM Admin"
-admin.site.site_title = "CRM Admin Portal"
-admin.site.index_title = "Welcome to CRM Admin Portal!"
+admin.site.site_header = _("CRM Admin")
+admin.site.site_title = _("CRM Admin Portal")
+admin.site.index_title = _("Welcome to CRM Admin Portal!")
 
 
 
@@ -70,7 +70,7 @@ class MembershipAdmin(ModelAdmin, ImportExportModelAdmin):
         label = dict(obj.MEMBERSHIP_CHOICES).get(obj.membership_plan, obj.membership_plan)
         return format_html('<span style="color: {};">{}</span>', color, label)
 
-    colored_plan.short_description = 'Membership Plan'
+    colored_plan.short_description = _('Membership Plan')
     colored_plan.admin_order_field = 'membership_plan'  # optional: allow sorting
 
 

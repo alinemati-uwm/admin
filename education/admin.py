@@ -2,8 +2,12 @@ from django.contrib import admin
 from django.db.models import Count
 from django.utils.html import format_html
 from django.utils.text import slugify
-
+from django.utils.translation import gettext_lazy as _
+from unfold.admin import ModelAdmin
+from unfold.paginator import InfinitePaginator
 from .models import Course, Lesson
+from unfold.admin import TabularInline
+
 
 # class AdminLoginArea(admin.AdminSite):
 #     login_template = 'admin/login.html'
@@ -14,9 +18,9 @@ class EducationAdminSite(admin.AdminSite):
     Custom admin site for the education app.
     This can be used to create a separate admin area if needed.
     """
-    site_header = "Education Admin"
-    site_title = "Education Admin Portal"
-    index_title = "Welcome to the Education Admin Portal"
+    site_header = _("Education Admin")
+    site_title = _("Education Admin Portal")
+    index_title = _("Welcome to the Education Admin Portal")
 
 education_site = EducationAdminSite(name='education_admin')
 
@@ -26,13 +30,15 @@ education_site = EducationAdminSite(name='education_admin')
 education_site.register(Course)
 education_site.register(Lesson)
 
-class LessonInline(admin.TabularInline):
+class LessonInline(TabularInline):
     """
     Tabular inline for displaying lessons within a course.
     Shows lesson name, order, and a preview of content.
     """
+    hide_ordering_field = True
+
     model = Lesson
-    extra = 1
+    extra = 3
     max_num = 10  # Limit to 10 lessons
     fields = ('lesson_name', 'lesson_order', 'slug', 'content_preview')
     prepopulated_fields = {"slug": ("lesson_name",)}
@@ -43,7 +49,7 @@ class LessonInline(admin.TabularInline):
         if obj.lesson_content:
             return obj.lesson_content[:50] + '...' if len(obj.lesson_content) > 50 else obj.lesson_content
         return '-'
-    content_preview.short_description = 'Content Preview'
+    content_preview.short_description = _('Content Preview')
 
 
 class LessonAdminInline(admin.StackedInline):
@@ -59,12 +65,14 @@ class LessonAdminInline(admin.StackedInline):
 
 
 @admin.register(Course)
-class CourseAdmin(admin.ModelAdmin):
+class CourseAdmin(ModelAdmin):
     """
     Admin configuration for Course model.
     Provides comprehensive management interface for courses with filtering,
     searching, and inline lesson management.
     """
+    paginator = InfinitePaginator
+    show_full_result_count = True
     list_display = ('id', 'Course_title', 'Course_instructor',
                     'date_range', 'lesson_count')
     list_filter = ('Course_start_date', 'Course_end_date', 'Course_instructor')
@@ -148,11 +156,13 @@ class CourseAdmin(admin.ModelAdmin):
 
 
 @admin.register(Lesson)
-class LessonAdmin(admin.ModelAdmin):
+class LessonAdmin(ModelAdmin):
     """
     Admin configuration for Lesson model.
     Provides detailed management interface for individual lessons.
     """
+    paginator = InfinitePaginator
+    show_full_result_count = False
     list_display = ('id', 'lesson_name', 'course_link',
                     'lesson_order', 'content_length')
     list_filter = ('lesson_course', 'lesson_order')

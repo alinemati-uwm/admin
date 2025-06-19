@@ -5,12 +5,12 @@
 
 
 ```bash
-docker run --name pgdev -e POSTGRES_DB=elevate_db -e POSTGRES_USER=eval_user -e POSTGRES_PASSWORD=eval_password -p 5436:5432 -d postgres
+docker run --name admin-DB -e POSTGRES_DB=elevate_db -e POSTGRES_USER=eval_user -e POSTGRES_PASSWORD=eval_password -p 5436:5432 -d postgres
 ```
 
 then
 ```bash
-docker exec -it pgdev psql -U eval_user -d elevate_db
+docker exec -it admin-DB psql -U eval_user -d elevate_db
 ```
 
 check if the user is created
