@@ -177,3 +177,25 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+
+
+UNFOLD = {
+    "SITE_DROPDOWN": [
+        {
+            "icon": "diamond",
+            "title": _("Nemati AI"),
+            "link": "https://nemati.ai",
+        },
+        {
+            "icon": "diamond",
+            "title": _("Dev Nemati ai"),
+            "link": "https://dev.nemati.ai",
+            # "link": reverse_lazy("admin:index"),
+
+        },
+    ]
+}
