@@ -9,6 +9,15 @@ from .models import Course, Lesson
 from unfold.admin import TabularInline
 
 
+from django.contrib import admin
+from django.contrib.auth import get_user_model
+
+from simple_history.admin import SimpleHistoryAdmin
+
+User = get_user_model()
+
+
+
 # class AdminLoginArea(admin.AdminSite):
 #     login_template = 'admin/login.html'
 # admin_site = AdminLoginArea(name='admin')
@@ -155,12 +164,20 @@ class CourseAdmin(ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
+
+
+
+
+
+
 @admin.register(Lesson)
 class LessonAdmin(ModelAdmin):
     """
     Admin configuration for Lesson model.
     Provides detailed management interface for individual lessons.
     """
+    list_filter_submit = True  # Submit button at the bottom of the filter
+
     paginator = InfinitePaginator
     show_full_result_count = False
     list_display = ('id', 'lesson_name', 'course_link',

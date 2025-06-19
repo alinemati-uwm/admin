@@ -9,8 +9,10 @@ from unfold.contrib.import_export.forms import (ExportForm, ImportForm,
                                                 SelectableFieldsExportForm)
 from unfold.forms import (AdminPasswordChangeForm, UserChangeForm,
                     UserCreationForm)
+from unfold.contrib.filters.admin import ChoicesRadioFilter, ChoicesCheckboxFilter
 
 from .models import Membership
+from simple_history.admin import SimpleHistoryAdmin
 
 admin.site.unregister(User)
 admin.site.unregister(Group)
@@ -23,10 +25,13 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
-
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active')
+    list_filter = ('is_staff', 'is_active', 'groups')
+class UserAdmin(SimpleHistoryAdmin, ModelAdmin):
+    pass
 
 @admin.register(Group)
-class GroupAdmin(BaseGroupAdmin, ModelAdmin):
+class GroupAdmin(SimpleHistoryAdmin, ModelAdmin):
     pass
 
 
@@ -48,7 +53,7 @@ from django.utils.html import format_html
 @admin.register(Membership )
 class MembershipAdmin(ModelAdmin, ImportExportModelAdmin):
     list_display = ('id',  'created_at', 'updated_at', 'name', 'colored_plan', 'membership_active', 'unique_code' )
-    list_filter = ('membership_plan', 'membership_active', 'created_at', 'updated_at')
+    # list_filter = ('membership_plan', 'membership_active', 'created_at', 'updated_at')
     search_fields = ('name', 'unique_code')
     ordering = ('id', 'name')
     # readonly_fields = ('unique_code',)
@@ -57,6 +62,11 @@ class MembershipAdmin(ModelAdmin, ImportExportModelAdmin):
     list_editable = ('membership_active', 'unique_code',)
     date_hierarchy = 'created_at'  # Enables date-based drilldown navigation
     actions = ['unique_code']
+    list_filter = [
+        ("membership_plan", ChoicesCheckboxFilter),
+        ("membership_active", ChoicesRadioFilter),
+
+    ]
     import_form_class = ImportForm
     export_form_class = SelectableFieldsExportForm
 

@@ -43,7 +43,9 @@ INSTALLED_APPS = [
 "unfold.contrib.inlines",  # optional, if special inlines are needed
 "unfold.contrib.guardian",  # optional, if django-guardian package is used
 "unfold.contrib.simple_history",  # optional, if django-simple-history package is used
-#    'captcha',
+
+    "simple_history",
+#   'captcha',
 ]
 
 
