@@ -33,6 +33,9 @@ ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(','
 # Application definition
 
 INSTALLED_APPS = [
+
+    "unfold",  # before django.contrib.admin
+
 #    'multi_captcha_admin',
     'django_advanced_password_validation',
     "django.contrib.admin",
@@ -43,7 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     'crm',
     'education',
-
+    "cache_cleaner",
 #    'captcha',
 ]
 
@@ -102,7 +105,7 @@ DATABASES = {
         'USER': os.environ.get('DB_USER', 'eval_user'),  # replace with your database user
         'PASSWORD': os.environ.get('DB_PASSWORD', 'eval_password'),  # replace with your database password
         'HOST': os.environ.get('DB_HOST', 'localhost'),  # or your PostgreSQL host
-        'PORT': os.environ.get('DB_PORT', '5432'),        # default PostgreSQL port
+        'PORT': os.environ.get('DB_PORT', '5436'),        # Docker PostgreSQL port
     }
 }
 

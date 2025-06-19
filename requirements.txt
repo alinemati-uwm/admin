@@ -1,4 +1,4 @@
-Django>=5.2.2
+Django>=5.4.2
 psycopg2-binary>=2.9.3
 django-advanced-password-validation
 python-dotenv
@@ -6,3 +6,7 @@ pandas
 jupyter
 notebook
 ipykernel
+django-unfold==0.60.0
+iost==6.0.1
+django-cache-cleaner==0.2.0
+pre-commit==4.2.0

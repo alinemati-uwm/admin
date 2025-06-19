@@ -1,5 +1,6 @@
 from django.db import models
 
+
 # Create your models here.
 class Membership(models.Model):
     name = models.CharField(max_length=100)
@@ -31,4 +32,3 @@ class Membership(models.Model):
         verbose_name_plural = "Membership"
         ordering = ['name', 'membership_plan']
         unique_together = ('name', 'unique_code')
-

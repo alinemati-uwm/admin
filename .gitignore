@@ -87,5 +87,5 @@ src/syntheic_Data/
 # */migrations/*
 # !*/migrations/__init__.py
 
-# Static files collected 
+# Static files collected
 /static/

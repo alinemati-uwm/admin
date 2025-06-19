@@ -1,6 +1,30 @@
 from django.contrib import admin
-from . models import Membership 
-from django.contrib.auth.models import User , Group
+from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.models import Group, User
+from unfold.admin import ModelAdmin
+from unfold.forms import (AdminPasswordChangeForm, UserChangeForm,
+                          UserCreationForm)
+
+from .models import Membership
+
+admin.site.unregister(User)
+admin.site.unregister(Group)
+
+
+@admin.register(User)
+class UserAdmin(BaseUserAdmin, ModelAdmin):
+    # Forms loaded from `unfold.forms`
+    form = UserChangeForm
+    add_form = UserCreationForm
+    change_password_form = AdminPasswordChangeForm
+
+
+@admin.register(Group)
+class GroupAdmin(BaseGroupAdmin, ModelAdmin):
+    pass
+
+
 # admin.site.register(Membership)
 # admin.site.unregister(User) # Unregister the User model to prevent it from being displayed in the admin interface
 # admin.site.unregister(Group) # Unregister the Group model to prevent it from being displayed in the admin interface
@@ -27,7 +51,7 @@ admin.site.index_title = "Welcome to CRM Admin Portal!"
 #         None specified yet - using default ModelAdmin behavior.
 #     """
 #     pass
- 
+
 # #admin.site.register(Membership, MembershipAdmin)
 
 # Keep all of variables which we are adding manually
@@ -55,7 +79,7 @@ admin.site.index_title = "Welcome to CRM Admin Portal!"
 #     list_display = ('name', 'membership_plan', 'membership_active', 'unique_code')
 #     search_fields = ('name', 'unique_code')
 #     list_filter = ('membership_plan', 'membership_active' , 'unique_code')
- 
+
 
 #  # Keep all of variables except one of them
 # @admin.register(Membership)
@@ -114,6 +138,7 @@ admin.site.index_title = "Welcome to CRM Admin Portal!"
 
 from django.utils.html import format_html
 
+
 @admin.register(Membership)
 class MembershipAdmin(admin.ModelAdmin):
     list_display = ('id',  'created_at', 'updated_at', 'name', 'colored_plan', 'membership_active', 'unique_code' )
@@ -145,7 +170,7 @@ class MembershipAdmin(admin.ModelAdmin):
             # Message to prevent deletion
             self.message_user(request, "Deletion is not allowed for Membership records.", level='error')
         return True
-    
+
         # add to change or not change the user
     def has_change_permission(self, request, obj=None):
         """Allow change permission for all users in the admin."""

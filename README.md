@@ -1,14 +1,25 @@
 # ElevateDB Setup Instructions
 
 
+
+
+
 ```bash
-docker run --name pgdev -e POSTGRES_DB=elevate_db -e POSTGRES_USER=eval_user -e POSTGRES_PASSWORD=eval_password -p 5432:5432 -d postgres
+docker run --name pgdev -e POSTGRES_DB=elevate_db -e POSTGRES_USER=eval_user -e POSTGRES_PASSWORD=eval_password -p 5436:5432 -d postgres
 ```
 
 then
 ```bash
 docker exec -it pgdev psql -U eval_user -d elevate_db
 ```
+
+check if the user is created
+```sql
+\du
+```
+
+
+
 
 # Django Project
 ```bash
@@ -21,8 +32,22 @@ python manage.py migrate
 ```
 
 
-collectstatic will collect all static files from your Django apps and place them in the directory specified by the `STATIC_ROOT` setting in your Django settings file. This is necessary for serving static files in production.
+then
+```bash
+python manage.py createsuperuser
+```
+
 
 ```bash
-python manage.py collectstatic
+python manage.py runserver
 ```
+
+run the following command to clear the cache
+```
+python manage.py clear_cache --all
+```
+
+run the following command to pre-commit
+```
+pre-commit run --all-files
+```;

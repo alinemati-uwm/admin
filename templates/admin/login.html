@@ -18,9 +18,10 @@
     --card-background: #ffffff;
     --text-color: #1f2937;
   }
-
   body {
-    background-color: var(--background-color);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     align-items: center;
@@ -28,6 +29,12 @@
     min-height: 100vh;
     padding: 1rem;
     margin: 0;
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 
   #container {
@@ -47,18 +54,22 @@
     text-align: center;
     margin-bottom: 2.5rem;
   }
-
   .login-header h1 {
     color: var(--primary-color);
     font-size: 2rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
   }
 
   .login-header p {
     color: var(--secondary-color);
     font-size: 1rem;
     margin-top: 0.5rem;
+    line-height: 1.5;
   }
 
   .form-row {
@@ -147,10 +158,20 @@
     font-size: 0.9rem;
     transition: color 0.15s ease-in-out;
   }
-
   .password-reset-link a:hover {
     color: #3b5fe0;
     text-decoration: underline;
+  }
+
+  .welcome-footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: rgba(74, 108, 247, 0.05);
+    border-radius: 8px;
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+    border: 1px solid rgba(74, 108, 247, 0.1);
   }
 
   .errornote {
@@ -197,13 +218,12 @@
 
 {% block content_title %}{% endblock %}
 
-{% block nav-breadcrumbs %}{% endblock %} {% block content %}
-  {% if form.errors and not form.non_field_errors %}
+{% block nav-breadcrumbs %}{% endblock %} {% block content %}  {% if form.errors and not form.non_field_errors %}
     <p class="errornote">
       {% blocktranslate count counter=form.errors.items|length %}
-        Please correct the error below.
+        Oops! 😅 Just a small hiccup - please fix the issue below and try again.
       {% plural %}
-        Please correct the errors below.
+        Oops! 😅 Just a few small hiccups - please fix the issues below and try again.
       {% endblocktranslate %}
     </p>
   {% endif %}
@@ -214,17 +234,14 @@
     {% endfor %}
   {% endif %}
 
-  <div id="content-main">
-    <div class="login-header">
-      <h1>{% translate 'Admin Login' %}</h1>
-      <p>{% translate 'Please enter your credentials to continue' %}</p>
-    </div>
-
-    {% if user.is_authenticated %}
+  <div id="content-main">    <div class="login-header">
+      <h1>✨ {% translate 'Welcome Back!' %}</h1>
+      <p>{% translate 'We\'re delighted to see you again. Please sign in to access your dashboard.' %}</p>
+    </div>    {% if user.is_authenticated %}
       <p class="errornote">
         {% blocktranslate trimmed %}
-          You are authenticated as {{ username }}, but are not authorized to
-          access this page. Would you like to login to a different account?
+          Hello {{ username }}! 👋 It looks like you're already signed in, but you need different permissions to access this page.
+          Would you like to sign in with a different account that has the right access?
         {% endblocktranslate %}
       </p>
     {% endif %}
@@ -277,16 +294,18 @@
         <input type="hidden" name="next" value="{{ next }}" />
       </div>
       {% url 'admin_password_reset' as password_reset_url %}
-      {% if password_reset_url %}
-        <div class="password-reset-link">
+      {% if password_reset_url %}        <div class="password-reset-link">
           <a href="{{ password_reset_url }}">
-            {% translate 'Forgotten your login credentials?' %}
+            {% translate '🔐 Need help with your password? We\'ve got you covered!' %}
           </a>
         </div>
-      {% endif %}
-      <div class="submit-row">
-        <input type="submit" value="{% translate 'Log in' %}" />
+      {% endif %}      <div class="submit-row">
+        <input type="submit" value="{% translate 'Sign Me In! 🚀' %}" />
       </div>
     </form>
+      <div class="welcome-footer">
+      💝 <strong>Thank you for being awesome!</strong><br>
+      Have a wonderful day and happy managing! ✨
+    </div>
   </div>
 {% endblock %}

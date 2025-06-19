@@ -1,7 +1,8 @@
 from django.contrib import admin
-from django.utils.text import slugify
-from django.utils.html import format_html
 from django.db.models import Count
+from django.utils.html import format_html
+from django.utils.text import slugify
+
 from .models import Course, Lesson
 
 # class AdminLoginArea(admin.AdminSite):
