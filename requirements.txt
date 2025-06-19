@@ -10,3 +10,4 @@ django-unfold==0.60.0
 iost==6.0.1
 django-cache-cleaner==0.2.0
 pre-commit==4.2.0
+django-import-export==4.3.7

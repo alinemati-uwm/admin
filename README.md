@@ -50,4 +50,4 @@ python manage.py clear_cache --all
 run the following command to pre-commit
 ```
 pre-commit run --all-files
-```;
+```
