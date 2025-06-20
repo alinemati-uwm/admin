@@ -20,3 +20,5 @@ isort==6.0.1
 pre-commit==4.2.0
 
 django-simple-history== 3.8.0
+
+django-modeltranslation==0.19.15

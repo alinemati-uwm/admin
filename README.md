@@ -1,9 +1,6 @@
 # ElevateDB Setup Instructions
 
 
-
-
-
 ```bash
 docker run --name admin-DB -e POSTGRES_DB=elevate_db -e POSTGRES_USER=eval_user -e POSTGRES_PASSWORD=eval_password -p 5436:5432 -d postgres
 ```

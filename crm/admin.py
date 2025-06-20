@@ -25,7 +25,7 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
-    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active')
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active' , 'last_login' , 'date_joined')
     list_filter = ('is_staff', 'is_active', 'groups')
 class UserAdmin(SimpleHistoryAdmin, ModelAdmin):
     pass

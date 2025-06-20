@@ -7,15 +7,14 @@ from unfold.admin import ModelAdmin
 from unfold.paginator import InfinitePaginator
 from .models import Course, Lesson
 from unfold.admin import TabularInline
+from modeltranslation.admin import TabbedTranslationAdmin, TranslationTabularInline, TranslationTabularInline
 
 
-from django.contrib import admin
 from django.contrib.auth import get_user_model
 
 from simple_history.admin import SimpleHistoryAdmin
 
 User = get_user_model()
-
 
 
 # class AdminLoginArea(admin.AdminSite):
@@ -31,25 +30,25 @@ class EducationAdminSite(admin.AdminSite):
     site_title = _("Education Admin Portal")
     index_title = _("Welcome to the Education Admin Portal")
 
+
 education_site = EducationAdminSite(name='education_admin')
-
-
 
 
 education_site.register(Course)
 education_site.register(Lesson)
 
-class LessonInline(TabularInline):
+
+class LessonInline(TranslationTabularInline):
     """
     Tabular inline for displaying lessons within a course.
-    Shows lesson name, order, and a preview of content.
+    Shows lesson name, order, and a preview of content with translation support.
     """
     hide_ordering_field = True
 
     model = Lesson
-    extra = 3
+    extra = 1  # Reduced to 1 since translations can take more space
     max_num = 10  # Limit to 10 lessons
-    fields = ('lesson_name', 'lesson_order', 'slug', 'content_preview')
+    fields = ('lesson_name', 'lesson_order', 'slug')
     prepopulated_fields = {"slug": ("lesson_name",)}
     readonly_fields = ('content_preview',)
 
@@ -74,7 +73,7 @@ class LessonAdminInline(admin.StackedInline):
 
 
 @admin.register(Course)
-class CourseAdmin(ModelAdmin):
+class CourseAdmin(TabbedTranslationAdmin):
     """
     Admin configuration for Course model.
     Provides comprehensive management interface for courses with filtering,
@@ -164,14 +163,8 @@ class CourseAdmin(ModelAdmin):
         super().save_model(request, obj, form, change)
 
 
-
-
-
-
-
-
 @admin.register(Lesson)
-class LessonAdmin(ModelAdmin):
+class LessonAdmin(TabbedTranslationAdmin):
     """
     Admin configuration for Lesson model.
     Provides detailed management interface for individual lessons.
@@ -184,7 +177,7 @@ class LessonAdmin(ModelAdmin):
                     'lesson_order', 'content_length')
     list_filter = ('lesson_course', 'lesson_order')
     search_fields = ('lesson_name', 'lesson_content',
-                    'lesson_course__Course_title')
+                     'lesson_course__Course_title')
     ordering = ('lesson_course', 'lesson_order')
     prepopulated_fields = {"slug": ("lesson_name",)}
     list_display_links = ('id', 'lesson_name')

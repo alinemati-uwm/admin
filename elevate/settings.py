@@ -1,5 +1,4 @@
-
-
+from django.urls import reverse_lazy
 import os
 from pathlib import Path
 from urllib.parse import urlparse
@@ -13,39 +12,43 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-mt50)h#xlucwckt3scq^$f^h@c-_mrl036mj4!0lnbyhyt0d%^")
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY", "django-insecure-mt50)h#xlucwckt3scq^$f^h@c-_mrl036mj4!0lnbyhyt0d%^")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "localhost,127.0.0.1").split(',')
+ALLOWED_HOSTS = os.environ.get(
+    "ALLOWED_HOSTS", "localhost,127.0.0.1").split(',')
 
 
 # Application definition
 
 INSTALLED_APPS = [
-'unfold.contrib.import_export',
-"unfold",  # before django.contrib.admin
-'import_export',
-# 'multi_captcha_admin',
-'django_advanced_password_validation',
-"django.contrib.admin",
-"django.contrib.auth",
-"django.contrib.contenttypes",
-"django.contrib.sessions",
-"django.contrib.messages",
-"django.contrib.staticfiles",
-'crm',
-'education',
-"cache_cleaner",
-"unfold.contrib.filters",  # optional, if special filters are needed
-"unfold.contrib.forms",  # optional, if special form elements are needed
-"unfold.contrib.inlines",  # optional, if special inlines are needed
-"unfold.contrib.guardian",  # optional, if django-guardian package is used
-"unfold.contrib.simple_history",  # optional, if django-simple-history package is used
+    "modeltranslation",
+    'unfold.contrib.import_export',
+    "unfold",  # before django.contrib.admin
+    'import_export',
+    # 'multi_captcha_admin',
+    'django_advanced_password_validation',
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    'crm',
+    'education',
+    "cache_cleaner",
+    "unfold.contrib.filters",  # optional, if special filters are needed
+    "unfold.contrib.forms",  # optional, if special form elements are needed
+    "unfold.contrib.inlines",  # optional, if special inlines are needed
+    "unfold.contrib.guardian",  # optional, if django-guardian package is used
+    # optional, if django-simple-history package is used
+    "unfold.contrib.simple_history",
 
     "simple_history",
-#   'captcha',
+    #   'captcha',
 ]
 
 
@@ -100,11 +103,16 @@ WSGI_APPLICATION = "elevate.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME', 'elevate_db'),  # replace with your database name
-        'USER': os.environ.get('DB_USER', 'eval_user'),  # replace with your database user
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'eval_password'),  # replace with your database password
-        'HOST': os.environ.get('DB_HOST', 'localhost'),  # or your PostgreSQL host
-        'PORT': os.environ.get('DB_PORT', '5436'),        # Docker PostgreSQL port
+        # replace with your database name
+        'NAME': os.environ.get('DB_NAME', 'elevate_db'),
+        # replace with your database user
+        'USER': os.environ.get('DB_USER', 'eval_user'),
+        # replace with your database password
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'eval_password'),
+        # or your PostgreSQL host
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        # Docker PostgreSQL port
+        'PORT': os.environ.get('DB_PORT', '5436'),
     }
 }
 
@@ -174,9 +182,12 @@ LOCALE_PATHS = [
     BASE_DIR / 'locale',
 ]
 
+# Modeltranslation settings
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+MODELTRANSLATION_PREPOPULATE_LANGUAGE = 'en'
+
 
 TIME_ZONE = "UTC"
-
 
 
 USE_TZ = True
@@ -195,9 +206,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
-from django.urls import reverse_lazy
-from django.utils.translation import gettext_lazy as _
 
 UNFOLD = {
     "SITE_TITLE": "Nemati AI",
@@ -232,7 +240,7 @@ UNFOLD = {
                         "title": _("Dashboard"),
                         "icon": "dashboard",  # Supported icon set: https://fonts.google.com/icons
                         "link": reverse_lazy("admin:index"),
-                        "badge": "sample_app.badge_callback",
+                        "badge": "Admin",
                         "permission": lambda request: request.user.is_superuser,
                     },
                     {
@@ -245,6 +253,19 @@ UNFOLD = {
         ],
     },
     "SHOW_LANGUAGES": True,
+
+    "EXTENSIONS": {
+        "modeltranslation": {
+            "flags": {
+                "en": "🇬🇧",
+                "de": "🇩🇪",
+                "fr": "🇫🇷",
+                "es": "🇪🇸",
+                "it": "🇮🇹",
+                "fa": "🇮🇷",
+            },
+        },
+    },
 
 
 }
