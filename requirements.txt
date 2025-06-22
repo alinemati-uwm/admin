@@ -6,3 +6,5 @@ pandas
 jupyter
 notebook
 ipykernel
+django-otp==1.6.0
+qrcode==8.2
